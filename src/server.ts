@@ -5,10 +5,11 @@ import config from "./config";
 let server: any;
 async function main() {
   try {
+    console.log(config.ip_address);
     const port =
       typeof config.port === "number" ? config.port : Number(config.port);
 
-    server = app.listen(port, config.ip_address as string, () => {
+    app.listen(port, config.ip_address as string, () => {
       console.log(color.green(`🚀 Application running on port:5000`));
     });
   } catch (error) {

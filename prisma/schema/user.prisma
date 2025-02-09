@@ -1,0 +1,13 @@
+enum Roles {
+    USER
+    ADMIN
+}
+
+model User {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String?
+  email String @unique
+  password String
+  role Roles @default(USER)
+  posts Post[]
+}

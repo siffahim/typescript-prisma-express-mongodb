@@ -9,7 +9,7 @@ const createUserToDB = async (payload: User) => {
       name,
       email,
       password,
-      role: "user",
+      role: "USER",
     },
   });
 
