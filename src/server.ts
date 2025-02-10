@@ -1,6 +1,7 @@
 import color from "colors";
 import app from "./app";
 import config from "./config";
+import { errorLogger, logger } from "./shared/logger";
 
 let server: any;
 async function main() {
@@ -8,18 +9,18 @@ async function main() {
     const port =
       typeof config.port === "number" ? config.port : Number(config.port);
 
-    app.listen(port, config.ip_address as string, () => {
-      console.log(color.green(`🚀 Application running on port:${port}`));
+    server = app.listen(port, config.ip_address as string, () => {
+      logger.info(color.green(`🚀 Application running on port:${port}`));
     });
   } catch (error) {
-    console.log(error);
+    errorLogger.error(color.red(`${error}`));
   }
 
   //handle unhandleRejection
   process.on("unhandledRejection", (error) => {
     if (server) {
       server.close(() => {
-        console.log(color.red(`UnhandleRejection Detected: ${error}`));
+        errorLogger.error(`UnhandleRejection Detected: ${error}`);
       });
     } else {
       process.exit(1);

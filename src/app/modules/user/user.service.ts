@@ -1,14 +1,23 @@
 import { User } from "@prisma/client";
+import bcrypt from "bcrypt";
 import prisma from "../../../../prisma";
+import config from "../../../config";
 
 //create user
 const createUserToDB = async (payload: User) => {
   const { name, email, password } = payload;
+
+  //hash password
+  const hashPassword = await bcrypt.hash(
+    password,
+    Number(config.bcrypt_salt_rounds)
+  );
+
   const user = await prisma.user.create({
     data: {
       name,
       email,
-      password,
+      password: hashPassword,
       role: "USER",
     },
   });
@@ -18,7 +27,7 @@ const createUserToDB = async (payload: User) => {
 
 //get all user
 const getAllUserFromDB = async () => {
-  const allUsers = await prisma.user.findMany();
+  const allUsers = await prisma.user.findMany({ select: { password: true } });
 
   return allUsers;
 };
@@ -27,7 +36,7 @@ const getAllUserFromDB = async () => {
 const getSingleUserFromDB = async (id: string) => {
   const user = await prisma.user.findUnique({
     where: { id },
-    select: { email: true, id: true },
+    select: { email: true, id: true, name: true },
   });
 
   return user;
