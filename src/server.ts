@@ -9,7 +9,7 @@ async function main() {
       typeof config.port === "number" ? config.port : Number(config.port);
 
     app.listen(port, config.ip_address as string, () => {
-      console.log(color.green(`🚀 Application running on port:5000`));
+      console.log(color.green(`🚀 Application running on port:${port}`));
     });
   } catch (error) {
     console.log(error);
