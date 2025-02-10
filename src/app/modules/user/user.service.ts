@@ -37,7 +37,7 @@ const getSingleUserFromDB = async (id: string) => {
 const updateUserToDB = async (id: string, payload: Partial<User>) => {
   const user = await prisma.user.update({
     where: { id },
-    data: { ...payload },
+    data: { ...payload, updatedAt: new Date() },
   });
 
   return user;

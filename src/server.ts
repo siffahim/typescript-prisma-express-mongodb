@@ -5,7 +5,6 @@ import config from "./config";
 let server: any;
 async function main() {
   try {
-    console.log(config.ip_address);
     const port =
       typeof config.port === "number" ? config.port : Number(config.port);
 
