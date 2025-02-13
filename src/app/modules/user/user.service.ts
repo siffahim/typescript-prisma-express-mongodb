@@ -27,7 +27,7 @@ const createUserToDB = async (payload: User) => {
 
 //get all user
 const getAllUserFromDB = async () => {
-  const allUsers = await prisma.user.findMany({ select: { password: true } });
+  const allUsers = await prisma.user.findMany();
 
   return allUsers;
 };
